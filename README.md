@@ -2,9 +2,9 @@
 
 Welcome!
 
-This tutorial is based on work we presented at the 2021 Cognitive Science Conference. Find the paper [here](https://cogtoolslab.github.io/pdf/mccarthy_cogsci_2021b.pdf). The goal of this project is to model the change in language as people learn to communicate about a shared procedural task-- recreating a scene of block towers.
+The goal of this project is to explore changes in language as people learn to communicate about a shared procedural task-- reconstructing a scene of block towers. In particular, we aim to model the learning of *procedural abstractions* using *program synthesis* and subsequent communication about them using a *Bayesian model of convention formation*. This tutorial is based on work we presented at the 2021 Cognitive Science Conference. You can find the paper [here](https://cogtoolslab.github.io/pdf/mccarthy_cogsci_2021b.pdf) if you would like to read more about it.
 
-We recommend reading this intro before diving into the tutorial. Here you will find a more detailed description of the experiment and a high-level description of the model. The tutorial itself is split across three notebooks, which you can find in the `notebooks` folder.
+We recommend reading this intro before diving into the tutorial. Here you will find a more detailed description of the experiment and a high-level overview of the analyses and model. The tutorial itself is split across three jupyter notebooks, which you can find in the `notebooks` folder.
 
 ## Experiment
 
@@ -16,19 +16,18 @@ In our experiment, participants were paired up and assigned the role of Architec
 *Architects* were shown the target scenes. They had to sent text instructions to the Builder, explaining how to construct the current scene.  
 *Builders* could not see the scenes. They followed the Architect's instructions by placing blocks in a Building environment.
 
-In the [first notebook](/notebooks/ca_language.ipynb), we analyze Architects' language to show that it becomes more abstract over time. Most saliently, we find the emergence of language referring to larger entities in the scenes, in particular to the three block towers that recurred across scenes:
+Architects and Builders worked together over 4 repetitions of 3 tower pairs, where each pair of tower was taken from the following three:
 
 <p style="font-size: smaller;  text-align: center;">
   <img width="30%" src="img/task_towers.png" style=""></img> </p>
 
+This meant that dyads (pairs) gained shared experience constructing the same tower multiple times. In the [first notebook](/notebooks/ca_language.ipynb), you will analyze Architects' language to show that it becomes more abstract over repetitions. If all goes to plan, you will uncover the emergence of words referring to larger entities in the scenes, in particular to the three block towers that recurred across scenes.
 
 ## Model
 
-Our computational model consists of two key steps that both rely on *programmatic representations* of construction procedures. Representing procedures as programs enables us to capture the hierarchical structure of the task and the abstractions that emerge in language.
+Our computational model consists of two key steps. Both rely on *programmatic representations* of construction procedures. Representing procedures as programs allows us to capture the hierarchical structure of the scenes, and model learning of part concepts as the addition of *program fragments* to a library of reusable subroutines. Learning these abstractions allows scene programs to be rewritten more concisely. In the [second notebook](/notebooks/ca_programs.ipynb), we show how this process can be implemented using a specific program abstraction algorithm.
 
-We first model the learning of part concepts as the acquisition of *program fragments*-- functional substrings of a program that represent subprocedures. Learning these abstractions allows scene programs to be rewritten more concisely. In the [second notebook](/notebooks/ca_programs.ipynb), we show how this process can be implemented using a specific program abstraction algorithm.
-
-The second key component of our model is a Bayesian model of convention formation. The crucial idea here is that, although someone may in principle have the representational capacity to communicate in a very concise way, they will only do so if they have a reason to believe that their partner will understand them. In the [third notebook](/notebooks/ca_conventions.ipynb), we explore how people may trade-off between conciseness and informativity of their language, by modeling how people form ad-hoc conventions for referring to learned abstractions.
+The second key component of our model is a Bayesian model of convention formation. The crucial idea here is that, even if someone is able to internally represent a scene in a concise way, they will only choose to *communicate* in this concise form if they have reason to believe that their partner will understand them. In the [third notebook](/notebooks/ca_conventions.ipynb), we explore how people may trade-off between concision and informativity of their language, by modeling how people form ad-hoc conventions for referring to learned abstractions.
 
 ## Tutorial
 
@@ -41,3 +40,8 @@ This tutorial is split across three notebooks.
 Each can be tackled separately, however, they are designed to be run in order.
 
 ## Installation
+
+1. Clone this repo.
+2. Install dependencies.
+3. In the directory for this project run `jupyter notebook`.
+4. Open [Notebook 1](/notebooks/ca_language.ipynb).
