@@ -16,14 +16,11 @@ In our experiment, participants were paired up and assigned the role of Architec
 *Architects* were shown the target scenes. They had to sent text instructions to the Builder, explaining how to construct the current scene.  
 *Builders* could not see the scenes. They followed the Architect's instructions by placing blocks in a Building environment.
 
-In the [first notebook](/notebooks/ca_language.ipynb), we analyze Architects' language to show that it becomes more abstract over time. Most saliently, we find the emergence of language referring to larger entities in the scenes, in particular to block towers that recurred across scenes.
+In the [first notebook](/notebooks/ca_language.ipynb), we analyze Architects' language to show that it becomes more abstract over time. Most saliently, we find the emergence of language referring to larger entities in the scenes, in particular to the three block towers that recurred across scenes:
 
+<p style="font-size: smaller;  text-align: center;">
+  <img width="30%" src="img/task_towers.png" style=""></img> </p>
 
-<object data="img/task_towers.pdf" type="application/pdf" width="700px" height="700px">
-    <embed src="img/task_towers.pdf">
-        <p>This browser does not support PDFs. Please download the PDF to view it: <a href="img/task_towers.pdf">Download PDF</a>.</p>
-    </embed>
-</object>
 
 ## Model
 
