@@ -1040,6 +1040,11 @@ block_colors = ['#0A2FB3','#B32F0A']
 h = (4,2)
 v = (2,4)
 
+
+class RenderError(Exception):
+    pass
+
+
 def render_program(prog):
     x = 5 # current x location
     
@@ -1062,6 +1067,7 @@ def render_program(prog):
             x += int(token[2:])
             assert x+1 <= 20
         else:
-            raise Error("unidentified token: " + token)
+            print(token)
+            raise RenderError("unidentified token: " + token)
             
     draw_world(w, line_width=1.2,  sf=0.3)

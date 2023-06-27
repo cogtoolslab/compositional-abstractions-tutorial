@@ -67,7 +67,8 @@ towers = dict(C = SupervisedTower("C", "(h (l 1) v v (r 1) h)"),
                 
 # ['PiC', 'LC', 'PiL', 'CL', 'CPi', 'LPi', 'PiC', 'PiL', 'LC', 'CL', 'LPi', 'CPi']
 lookup = {
-    '(lambda (lambda (1x2 (1x2 (right $0 (2x1 $1))))))': [SupervisedTower('1', '(v v (r 1) h)'), SupervisedTower('2', '(v v (r 12) h)')],
+#     '(lambda (lambda (1x2 (1x2 (right $0 (2x1 $1))))))': [SupervisedTower('1', '(v v (r 1) h)'), SupervisedTower('2', '(v v (r 12) h)')],
+'(lambda (lambda (1x2 (1x2 (right $0 (2x1 $1))))))': [SupervisedTower('1', '(v v (r 1) h)')],
 '(lambda (lambda (lambda (right 6 (1x2 (left 5 (2x1 (right 4 (2x1 (right $0 (2x1 (left $1 $2))))))))))))': [SupervisedTower('3', '((r 6) v (l 5) h (r 4) h (r 7) h)'), SupervisedTower('4', '((r 6) v (l 5) h (r 4) h (r 9) h)')],
 '(lambda (lambda (1x2 (right 6 (1x2 (left 5 (2x1 (right 4 (2x1 (right $0 $1))))))))))': [SupervisedTower('5', '(v (r 6) v (l 5) h (r 4) h)')],
 '(lambda (lambda (#(lambda (1x2 (right 6 (1x2 (left 5 (2x1 (right 4 (2x1 $0)))))))) (right $0 $1))))': [towers['Pi']],
@@ -99,7 +100,10 @@ lookup = {
 # added 06/23/23
 '(lambda (lambda (right $0 (1x2 (right 6 (1x2 (left 5 (2x1 (right 4 (2x1 $1))))))))))': [towers['Pi']],
 '(lambda (lambda (2x1 (left 4 (#(lambda (lambda (2x1 (left 1 (1x2 (1x2 (right $0 $1))))))) $0 $1)))))': [towers['L']],
-'(lambda (#(lambda (2x1 (left 4 (#(lambda (2x1 (left 1 (1x2 (1x2 $0))))) $0)))) (right 9 (#(lambda (1x2 (right 6 (1x2 (left 5 (2x1 (right 4 (2x1 $0)))))))) $0))))': [towers['LPi']]
+'(lambda (#(lambda (2x1 (left 4 (#(lambda (2x1 (left 1 (1x2 (1x2 $0))))) $0)))) (right 9 (#(lambda (1x2 (right 6 (1x2 (left 5 (2x1 (right 4 (2x1 $0)))))))) $0))))': [towers['LPi']],
+'(lambda (2x1 (left 4 $0)))': [SupervisedTower('6b', '(h (l 4))')],
+'(lambda (lambda (right $0 (#(lambda (2x1 (left 4 (#(lambda (2x1 (left 1 (1x2 (1x2 $0))))) $0)))) $1))))' : [towers['L']],
+'(lambda (lambda (left 1 (1x2 (1x2 (right $0 (2x1 $1)))))))' : [SupervisedTower('1', '(v v (r 1) h)')]
 }
 
 

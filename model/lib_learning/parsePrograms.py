@@ -1,7 +1,7 @@
 import utilities
 import render
 
-def parse(s, base_dsl_only = False):
+def parse(s, base_dsl_only = False, verbose = False):
     '''
     Converts a program in lambda format (i.e. from Dreamcoder enumeration) into a sequence of commands, 
         possibly including learned chunks.
@@ -14,11 +14,14 @@ def parse(s, base_dsl_only = False):
     >>> parse(s) 
     'h l_4 h l_1 v v r_9 chunk_Pi l_9'
     
-    '''
-    
+    '''    
+    pre_parse = s
     s = utilities.parseSExpression(s)
 
+    # print(s)
+    
     def p(e):
+        # print(e)
         if isinstance(e,list):
             if e[0] == '#':
                 assert len(e) == 2
@@ -28,7 +31,8 @@ def parse(s, base_dsl_only = False):
                     try:
                         return 'chunk_' + render.lookup[str(utilities.unparseSExpression(e[1]))][0].name + ' '
                     except:
-                        return 'chunk_unk'
+                        print(str(utilities.unparseSExpression(e[1])))
+                        return 'chunk_unknown_'
 
             if e[0] == 'lambda':
                 assert len(e) == 2
@@ -40,7 +44,8 @@ def parse(s, base_dsl_only = False):
                     return 'l_' + e[1] + ' ' + (p(e[2:]))
             if e[0] == 'right': 
                 if (e[1] == '$1') or (e[1] == '$0'):
-                    return ''
+                    return 'r_1 ' # hacky solution for dealing with degenerate chunks in w=1.5
+                    # return ''
                 else:
                     return 'r_' + e[1] + ' ' + (p(e[2:]))
             if e[0] == '1x2': return 'v ' + (p(e[1:]))
@@ -54,5 +59,11 @@ def parse(s, base_dsl_only = False):
         if e[0] == '2x1': return 'h ' + (p(e[1:]))
         if e == '$0': return ''
         if e == '$1': return ''
-        raise ParseFailure((s,e))
-    return p(s)[:-1]
+        if e == '1': return '' # hacky solution for dealing with degenerate chunks in w=1.5
+        # print(pre_parse)
+        raise ValueError((s, e))
+        
+        
+    parsed = p(s)[:-1]
+    
+    return parsed

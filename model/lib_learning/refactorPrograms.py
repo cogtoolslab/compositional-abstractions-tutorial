@@ -3,7 +3,7 @@ from towerPrimitives import primitives
 from grammar import *
 from fragmentGrammar import *
 from makeTowerTasks import *
-from parse import *
+from parsePrograms import *
 import json
 
 import os
