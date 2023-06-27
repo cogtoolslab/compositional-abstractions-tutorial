@@ -42,6 +42,10 @@ Each can be tackled separately, however, they are designed to be run in order.
 ## Installation
 
 1. Clone this repo.
-2. Install dependencies.
-3. In the directory for this project run `jupyter notebook`.
-4. Open [Notebook 1](/notebooks/ca_language.ipynb).
+2. (optional but makes life easier) 
+   1. Create a virtual env: `python3 -m venv ca_tut`
+   2. Activate it: `source env_name/bin/activate`
+   3. Install dependencies: `pip install -r requirements.txt`
+   4. Install new kernel for jupyter notebook  `python -m ipykernel install --user --name=ca_env`
+   5. In the directory for this project run `jupyter notebook` > change kernel to `ca_tut`.
+3. Open [Notebook 1](/notebooks/ca_language.ipynb).
