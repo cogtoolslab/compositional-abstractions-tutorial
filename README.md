@@ -43,8 +43,8 @@ Each can be tackled separately, however, they are designed to be run in order.
 
 1. Clone this repo.
 2. (optional but makes life easier) 
-   1. Create a virtual env: `python3 -m venv ca_tut`
-   2. Activate it: `source env_name/bin/activate`
+   1. Create a virtual env: `python3 -m venv ca_tutorial`
+   2. Activate it: `source ca_tutorial/bin/activate`
    3. Install dependencies: `pip install -r requirements.txt`
    4. Install new kernel for jupyter notebook  `python -m ipykernel install --user --name=ca_env`
    5. In the directory for this project run `jupyter notebook` > change kernel to `ca_tut`.
