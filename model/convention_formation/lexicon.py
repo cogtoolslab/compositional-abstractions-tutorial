@@ -3,48 +3,54 @@ import json
 
 # we assume all agents start with a basic mapping 
 # between 'h'/'v' in the DSL and 'horizontal'/'vertical' in language
-class BlockLexicon(dict) :
-    def __init__(self, primitives, lexemes):
+class BlockLexicon :
+    def __init__(self, dsl, lexemes):
         '''
         initialize dictionary subclass
         '''
-        dict.__init__(self)
-        self.__dict__ = self
-        unassigned_lexemes = lexemes.copy()
+        self.unassigned_lexemes = lexemes.copy()
         self.lexemes = tuple(lexemes)
+        self.dsl = dsl
+        self.primitives = [k for k in dsl if k[:5] != 'chunk']
+        self.chunks = [k for k in dsl if k[:5] == 'chunk']
+        self.lexicon = {}
         
-        for primitive in primitives :
-            if primitive in ['v', 'h'] :
-                adjective = 'horizontal' if primitive == 'h' else 'vertical'
-                self.update({primitive : f'place a {adjective} block.'})
-            elif primitive[0] in ['l', 'r'] :
-                distance = primitive.split('_')[1]
-                direction = 'right' if primitive[0] == 'r' else 'left'
-                self.update({primitive : f'move to the {direction} by {distance}'})
+        for element in dsl :
+            if element in ['v', 'h'] :
+                adjective = 'horizontal' if element == 'h' else 'vertical'
+                self.lexicon.update({element : f'place a {adjective} block.'})
+            elif element[0] in ['l', 'r'] :
+                distance = element.split('_')[1]
+                direction = 'right' if element[0] == 'r' else 'left'
+                self.lexicon.update({element : f'move to the {direction} by {distance}'})
             else :
-                self.update({primitive: f'place a {unassigned_lexemes.pop()}.'})
+                self.lexicon.update({element : f'place a {self.unassigned_lexemes.pop()}.'})
+        
+        self.utterances = set(self.lexicon.values())
+
     def __hash__(self):
-        return hash(json.dumps(self, sort_keys=True))
+        return hash(json.dumps(self.lexicon, sort_keys=True))
+
+    def __str__(self):
+        return json.dumps(self.lexicon, indent=4)
 
     def invert(self):
         '''
         invert keys and values of a dictionary d
         '''
-        return {v: k for k, v in self.items()}
+        return {v: k for k, v in self.lexicon.items()}
     
     def dsl_to_language(self, e) :
         '''
         parse expression e written in DSL into language
-        if dsl element unrecognized, choose at random
+        if dsl element unrecognized, choose *lexeme* at random
         '''
-        unassigned_primitives = [k for k in self.keys() if k[:5] == 'chunk']
-        return self.get(e) if e in self else choice(self.lexemes)
+        return self.lexicon.get(e) if e in self.lexicon else choice(self.lexemes)
     
     def language_to_dsl(self, e) :
         '''
         parse expression e written in DSL into language
-        if language unrecognized, choose at random
+        if language unrecognized, choose *chunk* at random
         '''
         inverted_lexicon = self.invert()
-        unassigned_primitives = [k for k in self.keys() if k[:5] == 'chunk']
-        return inverted_lexicon.get(e) if e in inverted_lexicon else choice(unassigned_primitives)
+        return inverted_lexicon.get(e) if e in inverted_lexicon else choice(self.chunks)
