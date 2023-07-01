@@ -3,10 +3,39 @@ import itertools
 import lexicon
 
 import numpy as np
+import pandas as pd 
 
 from scipy.special import logsumexp
 from numpy.random import choice
 
+class SimulationOutput() :
+    def __init__(self) :
+        self.d = pd.DataFrame({"trial": [], "utterance": [], "response": [], "intention":[],
+                               "target_program": [], "dsl": [], "target_length" : [], "acc": []})
+        self.utts, self.responses, self.accs, self.intents = [], [], [], []
+    
+    def save(self, intent, utt, response) :
+        self.utts.append(utt)
+        self.responses.append(response)
+        self.intents.append(intent)
+        self.accs.append(1.0 * (response == intent))
+
+    def flush(self, trial, target_program) :
+        self.d = pd.concat([self.d, pd.DataFrame({
+            "trial": trial['trial_num'],
+            "utterance": self.utts,
+            "response": self.responses,
+            "intention" : self.intents,
+            "target_program": target_program,
+            "acc": self.accs,
+            "dsl" : [trial['dsl']] * len(self.utts),
+            "target_length" : trial['programs_with_length'][target_program],
+        })])
+        self.utts, self.responses, self.accs, self.intents = [], [], [], []
+
+    def get_df(self) :
+        return self.d
+        
 class Distribution() :
     def __init__(self, support, probabilities, log_space = False):
         self.log_space = log_space
