@@ -1,8 +1,11 @@
+import json
+import itertools
+import lexicon
+
 import numpy as np
 
 from scipy.special import logsumexp
 from numpy.random import choice
-from collections import defaultdict
 
 class Distribution() :
     def __init__(self, support, probabilities, log_space = False):
@@ -10,9 +13,12 @@ class Distribution() :
         self.d = {}
         for element, probability in zip(support, probabilities) :
             self.d.update({element: probability})
-    
+
+    def __hash__(self):
+        return hash(json.dumps(self.d, sort_keys=True))
+
     def __str__(self) :
-        return str(self.d)
+        return json.dumps({k if isinstance(k, str) else str(hash(k)): v for k, v in self.d.items()}, indent = 4)
  
     def copy(self) :
         return Distribution(self.support(), [self.score(k) for k in self.support()], log_space = self.log_space)
@@ -28,6 +34,9 @@ class Distribution() :
                
     def score(self, val) :
         return self.d[val] if val in self.d else self.epsilon()
+
+    def sample(self) :
+        return choice(a = [*self.support()], p = [self.score(a) for a in self.support()])
     
     def epsilon(self) :
         return np.log(0.01) if self.log_space else 0.01
@@ -39,11 +48,11 @@ class Distribution() :
         Z = logsumexp(list(self.d.values())) if self.log_space else sum(self.d.values()) 
         for k, prob in self.d.items():
             self.d[k] = prob - Z if self.log_space else prob / Z
-          
+        
     def marginalize(self, f) :
-        d_new = defaultdict(float)
+        d_new = EmptyDistribution()
         for k, val in self.d.items():
-            d_new[f(k)] = np.logaddexp(d_new[f(k)], val) if self.log_space else d_new[f(k)] + val
+            d_new.update({f(k): val})
         return d_new
         
     def to_logspace(self) :
@@ -64,3 +73,14 @@ class UniformDistribution(Distribution) :
 class EmptyDistribution(Distribution) :
     def __init__(self):
         super().__init__([], [])
+
+class LexiconPrior(UniformDistribution) :
+    def __init__(self, dsl, lexemes):
+        # we cap the number of possible lexemes for simplicity 
+        # (the more theoretically sound way to solve this is 
+        # to make an 'empty meaning' to assign if there are no more chunks)
+        chunks = [k for k in dsl if k[:5] == 'chunk']
+        usable_lexemes = lexemes[:len(chunks)]
+        possible_lexicons = [lexicon.BlockLexicon(dsl, list(mapping)) 
+                             for mapping in itertools.permutations(usable_lexemes)]
+        super().__init__(possible_lexicons)
