@@ -33,9 +33,9 @@ The second key component of our model is a Bayesian model of convention formatio
 
 This tutorial is split across three notebooks.
 
-- [Notebook 1: Exploring abstraction in language about building](/notebooks/ca_language.ipynb)
-- [Notebook 2: Learning part concepts with program abstractions](/notebooks/ca_programs.ipynb)
-- [Notebook 3: Forming conventions to talk about shared abstractions](/notebooks/ca_conventions.ipynb)
+- [Notebook 1: Exploring abstraction in language about building](/notebooks_complete/1_ca_language_complete.ipynb)
+- [Notebook 2: Learning part concepts with program abstractions](/notebooks_complete/2_ca_programs_complete.ipynb)
+- [Notebook 3: Forming conventions to talk about shared abstractions](/notebook_complete/3_ca_conventions_complete.ipynb)
 
 Each can be tackled separately, however, they are designed to be run in order.
 
